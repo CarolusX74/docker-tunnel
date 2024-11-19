@@ -2,8 +2,9 @@ FROM nginx:alpine
 
 RUN apk add --no-cache bash autossh
 
-ADD nginx.conf.template /
-ADD start.sh /
+COPY nginx.conf.template /
+COPY start.sh /
+#COPY --chmod=400 ssh.key / (Better mount your ssh.key, we'll fix the permission inside)
 
 RUN chmod +x /start.sh
 #RUN chmod 400 /srv/ssh.key
@@ -15,11 +16,6 @@ ENV PROXY_SSH_USER="root"
 ENV APP_IP=""
 ENV MODE="app"
 
-ENV PORTS "80:3000,443:3001"
-ENV PROXY_HOST "1.2.3.4"
-ENV PROXY_SSH_PORT "22"
-ENV PROXY_SSH_USER "user"
-ENV APP_IP ""
-ENV MODE = ""
+RUN echo 'LA IMAGEN FUE COMPILADA EXITOSAMENTE \n'
 
 ENTRYPOINT ["/start.sh"]
